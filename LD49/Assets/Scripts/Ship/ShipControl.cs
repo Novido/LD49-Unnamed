@@ -62,11 +62,11 @@ public class ShipControl : MonoBehaviour
         {
             if (currentVelocity > 10)
             {
-                Debug.Log("You Lose!");
+                //Debug.Log("You Lose!");
             }
             else
             {
-                Debug.Log("Hit!");
+                //Debug.Log("Hit!");
             }
 
         }

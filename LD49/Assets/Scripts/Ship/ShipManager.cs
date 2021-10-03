@@ -9,17 +9,19 @@ public class ShipManager : MonoBehaviour
     private float fuelConsumption;
     private float thrust;
     private float rotationalThrust;
+    private Rigidbody2D rb2d;
+    private Vector2 centerOfMass;
     
 
-    public float initialFreightWeight = 1;
+    private float initialWeight = 1f;
     public float initialFuel = 10f;
     public float maxFuel;
-    public float initialFuelConsumption = 0.75f;
-    public float initialThrustPower = 2f;
-    public float initialRotationalThrustPower = 0.1f;
+    public float initialFuelConsumption = 0.5f;
+    public float initialThrustPower = 3f;
+    public float initialRotationalThrustPower = 0.05f;
 
     public float currentFuelAmount;
-
+    
     public float FreightWeight
     {
         get { return freightWright; }
@@ -53,22 +55,27 @@ public class ShipManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
+        //rb2d.mass = 0; 
+        
+
         // This might have to change when introducing upgrades.
         Fuel = initialFuel;
         maxFuel = initialFuel;
-        FreightWeight = initialFreightWeight;
+        //FreightWeight = initialFreightWeight;
         Thrust = initialThrustPower;
         RotationalThrust = initialRotationalThrustPower;
         FuelConsumption = initialFuelConsumption;
-    }
+    }    
 
     // Update is called once per frame
     void Update()
     {
         // For DEBUG
-        currentFuelAmount = Fuel;
+        //currentFuelAmount = Fuel;
+        centerOfMass = rb2d.centerOfMass;
     }
 
     public void BurnFuel()
@@ -86,6 +93,16 @@ public class ShipManager : MonoBehaviour
             return 0;
         else
             return total;
+    }
+
+    public void UpdateMass()
+    {
+        rb2d.mass = rb2d.mass + FreightWeight;
+    }
+
+    public void ResetMass()
+    {
+        rb2d.mass = initialWeight;
     }
 
 
